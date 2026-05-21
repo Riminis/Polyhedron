@@ -180,6 +180,15 @@ class Polyedr:
             return False
         return abs(v.x) > 0.5 or abs(v.y) > 0.5 or abs(v.z) > 0.5
 
+    def sum_projection_areas_good_vertices(self):
+        '''Вычисляет сумму площадей проекций граней имеющих "хорошую" точку'''
+        total_area = 0.0
+
+        for facet in self.facets:
+            if any(Polyedr.is_good_point(v) for v in facet.vertexes):
+                total_area += facet.projection_area_xy()
+        return total_area
+
     # Метод изображения полиэдра
     def draw(self, tk):  # pragma: no cover
         tk.clean()
