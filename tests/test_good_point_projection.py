@@ -7,10 +7,13 @@ from shadow.polyedr import Polyedr, Facet
 
 
 def _make_temp_geom(content: str) -> str:
-    tmp = tempfile.NamedTemporaryFile(mode='w', suffix='.geom', delete=False, encoding='utf-8')
+    tmp = tempfile.NamedTemporaryFile(
+        mode='w', suffix='.geom', delete=False, encoding='utf-8'
+        )
     tmp.write(content)
     tmp.close()
     return tmp.name
+
 
 class TestGoodPoint(unittest.TestCase):
     def test_inside_large_outside_small_positive(self):
@@ -48,7 +51,12 @@ class TestGoodPoint(unittest.TestCase):
 
 class TestProjectionAreaXY(unittest.TestCase):
     def test_square_in_xy_plane(self):
-        f = Facet([R3(0.0, 0.0, 0.0), R3(2.0, 0.0, 0.0), R3(2.0, 2.0, 0.0), R3(0.0, 2.0, 0.0)])
+        f = Facet([
+            R3(0.0, 0.0, 0.0),
+            R3(2.0, 0.0, 0.0),
+            R3(2.0, 2.0, 0.0),
+            R3(0.0, 2.0, 0.0)
+            ])
         self.assertAlmostEqual(f.projection_area_xy(), 4.0, places=6)
 
     def test_triangle_in_xy_plane(self):
@@ -60,7 +68,12 @@ class TestProjectionAreaXY(unittest.TestCase):
         self.assertAlmostEqual(f.projection_area_xy(), 2.0, places=6)
 
     def test_vertical_facet_zero_projection(self):
-        f = Facet([R3(0.0, 1.0, 0.0), R3(2.0, 1.0, 0.0), R3(2.0, 3.0, 0.0), R3(0.0, 3.0, 0.0)])
+        f = Facet([
+            R3(0.0, 1.0, 0.0),
+            R3(2.0, 1.0, 0.0),
+            R3(2.0, 3.0, 0.0),
+            R3(0.0, 3.0, 0.0)
+            ])
         self.assertAlmostEqual(f.projection_area_xy(), 4.0, places=6)
 
     def test_degenerate_facet(self):
@@ -70,7 +83,12 @@ class TestProjectionAreaXY(unittest.TestCase):
         self.assertEqual(f1.projection_area_xy(), 0.0)
 
     def test_concave_polygon_projection(self):
-        f = Facet([R3(0.0, 0.0, 0.0), R3(2.0, 1.0, 0.0), R3(0.0, 2.0, 0.0), R3(1.0, 1.0, 0.0)])
+        f = Facet([
+            R3(0.0, 0.0, 0.0),
+            R3(2.0, 1.0, 0.0),
+            R3(0.0, 2.0, 0.0),
+            R3(1.0, 1.0, 0.0)
+            ])
         self.assertAlmostEqual(f.projection_area_xy(), 1.0, places=6)
 
 

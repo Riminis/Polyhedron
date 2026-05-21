@@ -117,7 +117,7 @@ class Facet:
             (1.0 / len(self.vertexes))
 
     def projection_area_xy(self):
-        '''Вычисляет площадь проекции грани на плоскость XY по формуле площади Гаусса'''
+        '''Вычисляет площадь проекции грани на плоскость XY'''
         n = len(self.vertexes)
         if n < 3:
             return 0.0
@@ -172,7 +172,7 @@ class Polyedr:
                         self.edges.append(Edge(vertexes[n - 1], vertexes[n]))
                     # задание самой грани
                     self.facets.append(Facet(vertexes))
-    
+
     @staticmethod
     def is_good_point(v):
         '''Проверка точки'''
