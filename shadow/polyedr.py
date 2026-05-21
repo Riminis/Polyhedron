@@ -116,6 +116,20 @@ class Facet:
         return sum(self.vertexes, R3(0.0, 0.0, 0.0)) * \
             (1.0 / len(self.vertexes))
 
+    def projection_area_xy(self):
+        '''Вычисляет площадь проекции грани на плоскость XY по формуле площади Гаусса'''
+        n = len(self.vertexes)
+        if n < 3:
+            return 0.0
+
+        area = 0.0
+        for i in range(n):
+            j = (i + 1) % n
+            area += self.vertexes[i].x * self.vertexes[j].y
+            area -= self.vertexes[j].x * self.vertexes[i].y
+
+        return abs(area) / 2.0
+
 
 class Polyedr:
     """ Полиэдр """
