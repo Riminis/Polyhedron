@@ -158,6 +158,13 @@ class Polyedr:
                         self.edges.append(Edge(vertexes[n - 1], vertexes[n]))
                     # задание самой грани
                     self.facets.append(Facet(vertexes))
+    
+    @staticmethod
+    def is_good_point(v):
+        '''Проверка точки'''
+        if not (abs(v.x) < 1 and abs(v.y) < 1 and abs(v.z) < 1):
+            return False
+        return abs(v.x) > 0.5 or abs(v.y) > 0.5 or abs(v.z) > 0.5
 
     # Метод изображения полиэдра
     def draw(self, tk):  # pragma: no cover
