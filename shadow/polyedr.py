@@ -157,9 +157,18 @@ class Polyedr:
                     nv, nf, ne = (int(x) for x in line.split())
                 elif i < nv + 2:
                     # задание всех вершин полиэдра
-                    x, y, z = (float(x) for x in line.split())
-                    self.vertexes.append(R3(x, y, z).rz(
-                        alpha).ry(beta).rz(gamma) * c)
+                    x, y, z = (float(val) for val in line.split())
+
+                    raw_vertex = R3(x, y, z)
+                    is_good = self.is_good_point(raw_vertex)
+                    
+                    # Применяем трансформации к копии или к тому же объекту
+                    transformed = raw_vertex.rz(gamma).ry(beta).rz(alpha) * c
+                    
+                    # Сохраняем флаг как атрибут вершины
+                    transformed._is_good = is_good
+                    
+                    self.vertexes.append(transformed)
                 else:
                     # вспомогательный массив
                     buf = line.split()
@@ -185,7 +194,7 @@ class Polyedr:
         total_area = 0.0
 
         for facet in self.facets:
-            if any(Polyedr.is_good_point(v) for v in facet.vertexes):
+            if any(getattr(v, '_is_good', False) for v in facet.vertexes):
                 total_area += facet.projection_area_xy()
         return total_area
 
